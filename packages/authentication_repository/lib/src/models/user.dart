@@ -3,11 +3,11 @@ import 'package:equatable/equatable.dart';
 /// {@template user}
 /// User model
 ///
-/// [User.empty] represents an unauthenticated user.
+/// [UserModel.empty] represents an unauthenticated user.
 /// {@endtemplate}
-class User extends Equatable {
+class UserModel extends Equatable {
   /// {@macro user}
-  const User({
+  const UserModel({
     required this.id,
     this.email,
     this.name,
@@ -27,7 +27,7 @@ class User extends Equatable {
   final String? photo;
 
   /// Empty user which represents an unauthenticated user.
-  static const empty = User(id: '');
+  static const empty = UserModel(id: '');
 
   @override
   List<Object?> get props => [email, id, name, photo];

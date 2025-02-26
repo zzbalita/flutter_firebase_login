@@ -34,4 +34,6 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       ) {
     _authenticationRepository.logOut();
   }
+
+
 }

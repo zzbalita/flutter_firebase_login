@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:authentication_repository/authentication_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:google_sign_in/google_sign_in.dart';
@@ -137,9 +138,9 @@ class AuthenticationRepository {
 
   @visibleForTesting
   static const userCacheKey = '__user_cache_key__';
-  Stream<User> get user {
+  Stream<UserModel> get user {
     return _firebaseAuth.authStateChanges().map((firebaseUser) {
-      final user = firebaseUser == null ? User.empty : firebaseUser.toUser;
+      final user = firebaseUser == null ? UserModel.empty : firebaseUser.toUser;
       _cache.write(key: userCacheKey, value: user);
       return user;
     });
@@ -147,8 +148,8 @@ class AuthenticationRepository {
 
   /// Returns the current cached user.
   /// Defaults to [User.empty] if there is no cached user.
-  User get currentUser {
-    return _cache.read<User>(key: userCacheKey) ?? User.empty;
+  UserModel get currentUser {
+    return _cache.read<UserModel>(key: userCacheKey) ?? UserModel.empty;
   }
 
   /// Creates a new user with the provided [email] and [password].
@@ -229,7 +230,7 @@ class AuthenticationRepository {
 
 extension on firebase_auth.User {
   /// Maps a [firebase_auth.User] into a [User].
-  User get toUser {
-    return User(id: uid, email: email, name: displayName, photo: photoURL);
+  UserModel get toUser {
+    return UserModel(id: uid, email: email, name: displayName, photo: photoURL);
   }
 }
